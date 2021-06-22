@@ -1,0 +1,16 @@
+@import url(https://ease-css.netlify.app/ease/css/ease.css);
+
+/* **************************************************************** */
+* {
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  margin: 0;
+}
+.mt03-rem {
+  margin-top: 0.3rem;
+}
+.mt05-rem {
+  margin-top: 0.5rem;
+}
