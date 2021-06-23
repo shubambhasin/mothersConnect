@@ -1,9 +1,64 @@
 @import url(https://ease-css.netlify.app/ease/css/ease.css);
 
 /* **************************************************************** */
+:root {
+  /* ************light mode******** */
+
+  /* *******background-colors********** */
+  --bg-light-color: #f0f2f5;
+  --bg-white: white;
+  --t-grey-1: rgb(231, 231, 231);
+  --t-grey-2: rgb(177, 177, 177);
+  --t-grey-3: rgb(202, 202, 202);
+  --t-grey-4: rgb(156, 156, 156);
+  --t-grey-5: rgb(121, 121, 121);
+  --t-grey-6: rgb(87, 87, 87);
+  --t-grey-7: rgb(49, 49, 49);
+
+
+  /* *********z-index************ */
+  --lvl-1: 100;
+  --lvl-2: 200;
+  --lvl-3: 300;
+  --lvl-4: 400;
+  --lvl-5: 500;
+  --lvl-6: 600;
+  --lvl-7: 700;
+  --lvl-8: 800;
+  --lvl-9: 900;
+  --lvl-10: 1000;
+  /* *********text-color************* */
+
+  /* ************Dark mode******************* */
+}
+
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+.t-grey-6 {
+  color: rgb(87, 87, 87);
+}
+.t-grey-7 {
+  color: rgb(49, 49, 49);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: var(--bg-light-color);
+}
+button,
+.fakebtn {
+  cursor: pointer;
 }
 h1 {
   margin: 0;
@@ -13,4 +68,10 @@ h1 {
 }
 .mt05-rem {
   margin-top: 0.5rem;
+}
+
+/* *************misc*************** */
+
+.w-100 {
+  width: 100%;
 }
