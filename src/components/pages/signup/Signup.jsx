@@ -37,9 +37,9 @@ const Signup = () => {
             <h1 className="h1 t-center">Signup</h1>
             <div className="form-container">
               <div className="flex flex-col">
-                <div className=" input-container flex flex-col mt05-rem">
+                <div className="input-container flex flex-col mt05-rem">
                   <input
-                    className="input input-green  input-bg-grey mt03-rem"
+                    className="input input-green input-md input-bg-grey mt03-rem"
                     type="text"
                     name="username"
                     placeholder="Username"
@@ -50,7 +50,7 @@ const Signup = () => {
                 </div>
                 <div className="flex flex-col mt05-rem">
                   <input
-                    className="input  input-green  input-bg-grey mt03-rem"
+                    className="input input-green input-bg-grey mt03-rem"
                     type="text"
                     name="name"
                     placeholder="Name"
@@ -84,7 +84,7 @@ const Signup = () => {
                 <div className="flex flex-col jcc aic">
                   {" "}
                   <button
-                  onClick={handleSubmit}
+                    onClick={handleSubmit}
                     type="submit"
                     className="btn btn-lg btn-green mt1-rem"
                   >
@@ -92,7 +92,9 @@ const Signup = () => {
                   </button>
                   <small className="mt05-rem">
                     Already having an account?{" "}
-                    <NavLink to="/signin">Login</NavLink>
+                    <NavLink to="/signin" className="bold links">
+                      Login
+                    </NavLink>
                   </small>
                 </div>
               </div>

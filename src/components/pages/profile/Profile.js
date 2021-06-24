@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import "./profile.css";
-import styled from "styled-components";
 import CreatePost from "../../createPost/CreatePost";
-import { FcStackOfPhotos, FcGallery, FcShare } from "react-icons/fc";
+import { FcGallery, FcShare } from "react-icons/fc";
 import Post from "../../posts/Post";
 
-const StyledButton = styled.button`
-  background: green;
-  color: white;
-  font-size: larger;
-  border: 1px solid black;
-`;
 const Profile = () => {
   const [showCreatePost, setShowCreatePost] = useState(false);
 
@@ -46,12 +39,12 @@ const Profile = () => {
         </div>
         <div className="main-container">
           <div className="friends-info">Friends and all other information</div>
-          <div className="posts-display">
+          <div className="posts-display ">
             <div
               name="for toggling the modal"
               title="Click to make a post"
               onClick={toggleCreatePost}
-              className="fakebtn create-post flex flex-col"
+              className="fakebtn create-post flex flex-col global-shadow"
             >
               <p className="small t-grey-6">Whats in your mind</p>
               <div className="jsfe flex gap-2 jcc aic ">

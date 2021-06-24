@@ -17,10 +17,9 @@ const Signin = () => {
       [name]: value,
     });
   };
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
     console.log(user)
-
   }
   return (
     <div className="signin flex jcc aic">
@@ -65,7 +64,7 @@ const Signin = () => {
                     Login
                   </button>
                   <small className="mt05-rem">
-                    Don't have an account? <NavLink to='/signup'>Create account</NavLink>
+                    Don't have an account? <NavLink to='/signup' className="bold links">Create account</NavLink>
                   </small>
                 </div>
               </div>

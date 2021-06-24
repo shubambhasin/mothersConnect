@@ -1,5 +1,113 @@
-.home{
-    width: 70%;
-    height: 100vh;
-    background-color: red;
+.links {
+  color: rgb(43, 43, 43);
+}
+.home {
+}
+.main-menu {
+  background-color: var(--bg-white);
+  width: 70%;
+  margin: 1rem auto;
+  border-radius: 10px;
+  display: flex;
+  gap: 1rem;
+}
+.main-menu .user-info {
+  display: flex;
+  width: 40%;
+}
+.main-menu .user-info img {
+  border-radius: 50%;
+  max-width: 150px;
+}
+.main-menu .create-post {
+  width: 60%;
+  border-radius: 10px;
+  align-self: center;
+}
+.create-post-home {
+  background-color: var(--bg-light-color);
+  padding: 1rem;
+  height: 6rem;
+  margin: 1rem;
+  border-radius: 10px;
+}
+
+.home-container {
+  border-radius: 10px;
+  display: flex;
+  width: 70%;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: rgb(255, 255, 255);
+}
+.follow-more-container {
+  background-color: var(--bg-light-color);
+  height: 100vh;
+  border-radius: 10px;
+  display: flex;
+  width: 100%;
+}
+.follow-more {
+  padding: 1rem 0.5rem 1rem 1rem;
+  width: 40%;
+}
+.post-display-container {
+  background-color: var(--bg-light-color);
+  border-radius: 10px;
+  padding: 0.1rem 0rem;
+}
+.post-display {
+  padding: 1rem 1rem 1rem 0.5rem;
+  width: 60%;
+}
+.friends-to-follow {
+  width: 100%;
+  height: 5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .home-container {
+    flex-direction: column;
+  }
+  .follow-more {
+    width: 100%;
+  }
+  .post-display {
+    width: 100%;
+  }
+  .main-menu {
+    flex-direction: column;
+    width: 80%;
+    gap: 0rem;
+  }
+  .home-container {
+    width: 80%;
+  }
+  .main-menu .create-post {
+    width: 80%;
+  }
+  .follow-more {
+    padding: 1rem;
+  }
+  .post-display {
+    padding: 1rem;
+  }
+  .main-menu .user-info
+  {
+      padding-top: 1rem;
+      flex-direction: column;
+      align-self: center;
+  }
+}
+
+@media screen and (max-width: 455px) {
+  .main-menu {
+    width: 95%;
+  }
+  .home-container {
+    width: 95%;
+  }
+  .main-menu .create-post {
+    width: 95%;
+  }
 }

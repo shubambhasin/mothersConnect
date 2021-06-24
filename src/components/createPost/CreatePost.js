@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import "./createPost.css";
 import { CgClose } from "react-icons/cg";
-import { CloseBtn } from '../../components/styledComponent/styledbutton'
+import { CloseBtn } from "../../components/styledComponent/styledbutton";
 const CreatePost = () => {
-
   return (
-    <div className="createpost">
-      <div className="createpost-container">
+    <div className="createpost ">
+      <div className="createpost-container  ">
         <div className="flex jcc mb1-rem">
-          <h1 className="h3 mt05-rem">Create Post</h1>
+          <h1 className="h3 mt05-rem">Create Post</h1>          
           <CloseBtn>
             <CgClose />
           </CloseBtn>

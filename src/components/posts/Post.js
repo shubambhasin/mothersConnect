@@ -4,8 +4,8 @@ import { BsHeart } from "react-icons/bs";
 import { FaRegComment, FaRegShareSquare } from "react-icons/fa";
 const Post = () => {
   return (
-    <div className="post">
-      <div className="post-container  m1-rem">
+    <div className="post ">
+      <div className="post-container global-shadow  m1-rem">
         <div className="flex gap-1">
           {" "}
           <img
@@ -25,7 +25,7 @@ const Post = () => {
             <BsHeart size={20} />
             Like
           </span>
-          <span className="flex gap-4 jcc aic">
+          <span className="flex gap-1 jcc aic">
             <FaRegComment size={20} />
             Comment
           </span>

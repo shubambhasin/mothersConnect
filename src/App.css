@@ -69,9 +69,14 @@ h1 {
 .mt05-rem {
   margin-top: 0.5rem;
 }
-
+.global-shadow{
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+}
 /* *************misc*************** */
 
 .w-100 {
   width: 100%;
+}
+.bg-white{
+  background-color: var(--bg-white);
 }
