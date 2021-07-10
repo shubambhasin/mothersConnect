@@ -1,14 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./signin.css";
 import motherbabybanner from "../../../assets/motherbabybanner.svg";
-import { NavLink} from 'react-router-dom'
-
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signinUser } from "../../../features/user/userSlice";
+import toast, { Toaster } from "react-hot-toast";
 const Signin = () => {
   const [user, setUser] = useState({
-
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { token } = useSelector((state) => state.user);
+  const { isFetching, isSuccess, isError, errorMessage } = useSelector(
+    (state) => {
+      // console.log(state);
+      return state.user;
+    }
+  );
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, []);
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/");
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,10 +38,11 @@ const Signin = () => {
       [name]: value,
     });
   };
-const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user)
-  }
+    console.log(user);
+    dispatch(signinUser(user));
+  };
   return (
     <div className="signin flex jcc aic">
       <div className="signin-container">
@@ -36,7 +58,7 @@ const handleSubmit = (e) => {
             <h1 className="h1 t-center">Signin</h1>
             <div className="form-container">
               <div className="flex flex-col">
-                                <div className="flex flex-col mt05-rem">
+                <div className="flex flex-col mt05-rem">
                   <input
                     className="input input-bg-grey mt03-rem"
                     type="email"
@@ -60,11 +82,17 @@ const handleSubmit = (e) => {
                 </div>
                 <div className="flex flex-col jcc aic">
                   {" "}
-                  <button type="submit" className="btn btn-lg btn-green mt1-rem">
+                  <button
+                    type="submit"
+                    className="btn btn-lg btn-green mt1-rem"
+                  >
                     Login
                   </button>
                   <small className="mt05-rem">
-                    Don't have an account? <NavLink to='/signup' className="bold links">Create account</NavLink>
+                    Don't have an account?{" "}
+                    <NavLink to="/signup" className="bold links">
+                      Create account
+                    </NavLink>
                   </small>
                 </div>
               </div>

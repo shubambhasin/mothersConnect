@@ -1,11 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./profile.css";
 import CreatePost from "../../createPost/CreatePost";
 import { FcGallery, FcShare } from "react-icons/fc";
 import Post from "../../posts/Post";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "../../../features/posts/postSlice";
+import { useParams } from "react-router";
+import { notify } from "../../../services/notification";
+// import { getParticularUser } from "../../../features/whoToFollow/allUserSlice";
 
 const Profile = () => {
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPosts());
+    notify("Hello")
+
+  }, []);
+  const { id } = useParams();
+  console.log(id);
+  // useDispatch(getParticularUser(id))
+
+  const particularUser = useSelector((state) => state.allUser);
+  console.log(particularUser);
+
+  const user = useSelector((state) => state.user);
+  const currentUserPosts = useSelector((state) => state.posts);
+  currentUserPosts.status === "loading" &&
+    console.log("Posts are getting loaded");
+  currentUserPosts.status === "success" && console.log(currentUserPosts.posts);
 
   const toggleCreatePost = () => {
     setShowCreatePost((showCreatePost) => !showCreatePost);
@@ -31,7 +54,7 @@ const Profile = () => {
           />
         </div>
         <div className="user-info-container flex jcc aic flex-col">
-          <h1 className="h1 user-name">Test User</h1>
+          <h1 className="h1 user-name">{user.username}</h1>
           <span className="bio flex flex-col aic jcc">
             The world is not a fair place to live
             <div className="t-center">Edit</div>
@@ -58,7 +81,21 @@ const Profile = () => {
               </div>
             </div>
             <div>
-              <Post />
+              {currentUserPosts.status === "loading" && (
+                <p className="t-center m1b1-rem">"Loading..."</p>
+              )}
+              {currentUserPosts.status === "success" &&
+              currentUserPosts.posts.length !== 0
+                ? currentUserPosts.posts.map((post) => {
+                    return (
+                      <Post
+                        key={post._id}
+                        username={post.userId.username}
+                        data={post}
+                      />
+                    );
+                  })
+                : "No posts to show"}
             </div>
           </div>
         </div>

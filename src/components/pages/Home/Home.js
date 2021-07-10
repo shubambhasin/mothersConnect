@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Home.css";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import Post from "../../posts/Post";
+import HomePost from "../../homePosts/HomePost";
 import { FcGallery, FcShare } from "react-icons/fc";
+import {
+  Image,
+  Video,
+  Transformation,
+  CloudinaryContext,
+} from "cloudinary-react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../features/user/userSlice";
+import { getPostsForHome } from "../../../features/home/homeSlice";
+import PeopleCard from "../../peopleCard/PeopleCard";
 
 export const Navbar = styled.div`
   height: 3rem;
@@ -11,14 +21,47 @@ export const Navbar = styled.div`
   margin-bottom: 1rem;
 `;
 const Home = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => {
+    return state.user;
+  });
+
+  useEffect(() => {
+    dispatch(getPostsForHome());
+  }, []);
+
+  const { token } = useSelector((state) => {
+    return state.user;
+  });
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  const postsForHome = useSelector((state) => state.home);
+
   return (
     <div className="home">
       <Navbar className="flex aic jcsa global-shadow">
         <span>Mother connect</span>
         <div className="flex gap-2">
-          <NavLink to="/profile">Profile</NavLink>
-          <NavLink to="/signup">Signup</NavLink>
-          <NavLink to="/signin">Signin</NavLink>
+          <NavLink to="/profile" className="btn">
+            Profile
+          </NavLink>
+          <span className="flex jcc aic">
+            {!token && (
+              <>
+                {" "}
+                <NavLink to="/signup">Signup</NavLink>
+                <NavLink to="/signin">Signin</NavLink>
+              </>
+            )}
+            {token && (
+              <button className="btn" onClick={handleLogout}>
+                Logout
+              </button>
+            )}
+          </span>
         </div>
       </Navbar>
       <div className="main-menu global-shadow">
@@ -30,7 +73,7 @@ const Home = () => {
           />
           <div>
             {" "}
-            <h1 className="h3">Hello,Test User</h1>
+            <h1 className="h3">Hello, {user.username}</h1>
             <small> 30 deg 🌞 at akhnoor </small>
           </div>
         </div>
@@ -58,16 +101,27 @@ const Home = () => {
       <div className="home-container global-shadow">
         <div className="follow-more">
           <div className="follow-more-container p1-rem">
-            <span className="bg-white br10px p1-rem global-shadow friends-to-follow bold t-grey-7 ">
-              People you can follow
+            <span className="flex flex-col bg-white br10px p1-rem global-shadow friends-to-follow bold t-grey-7 ">
+              <span className="mtb1-rem">People you can follow</span>
+              <PeopleCard name="Shubam bhasin" />
             </span>
           </div>
         </div>
         <div className="post-display">
           <div className="post-display-container">
-            <Post />
-            <Post />
-            <Post />
+            {/* <Post username={user.username} postText="Test post " />
+            <Post username={user.username} postText="Test post " />
+            <Post username={user.username} postText="Test post " /> */}
+            {postsForHome.posts.map((post) => {
+              return (
+                <HomePost
+                  key={post._id}
+                  username={post.userId.username}
+                  data={post}
+                  author={post.userId.name}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

@@ -1,0 +1,12 @@
+.post-container{
+    padding:1rem 1rem;
+    border-radius: 10px;
+    background-color: var(--bg-white);
+}
+#interactions{
+    
+}
+.post-content{
+    margin: 0.5rem 0rem;
+    overflow-wrap: break-word;
+}

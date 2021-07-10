@@ -62,7 +62,7 @@
 }
 .friends-to-follow {
   width: 100%;
-  height: 5rem;
+  height: auto;
 }
 
 @media screen and (max-width: 768px) {

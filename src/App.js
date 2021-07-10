@@ -1,21 +1,36 @@
 import React from "react";
-import { Routes, Route } from "react-router";
 import "./App.css";
-import Signup from "../src/components/pages/signup/Signup";
-import Signin from "../src/components/pages/signin/Signin";
-import Home from "./components/pages/Home/Home";
-import Profile from './components/pages/profile/Profile'
+
+import { useSelector } from "react-redux";
+import MyRoutes from "./services/MyRoutes";
+import { instance } from "./api/Axios";
+import Interceptor from "./services/Interceptor";
+import { Toaster } from "react-hot-toast";
 function App() {
+  
+  const { token } = useSelector((state) => {
+    return state.user;
+  });
+  // console.log("line 17, token from state.user",token)
+  instance.defaults.headers.common['Authorization'] = token || "";
+  // setupDefaultsHeader(token)
+
+  // useEffect(() => {
+  //   (async() => {
+
+  //     await instance.get('/')
+
+  //   })()
+  // }, [])
+
+  // console.log("Auth token ", token);
+
   return (
     <div className="App">
+      <Interceptor/>
+      <Toaster />
       {/* <Signup/> */}
-
-      <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
+      <MyRoutes />
     </div>
   );
 }

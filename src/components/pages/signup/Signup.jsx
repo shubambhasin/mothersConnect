@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./signup.css";
 import motherbabybanner from "../../../assets/motherbabybanner.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { signupUser } from "../../../features/user/userSlice";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isFetching, isSuccess, isError, errorMessage } = useSelector(
+    (state) => {
+      console.log(state.user);
+      return state.user;
+    }
+  );
   const [user, setUser] = useState({
     username: "",
     name: "",
     email: "",
     password: "",
   });
+  const { token } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +39,26 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(user);
+    dispatch(signupUser(user));
   };
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(clearState());
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/");
+      // dispatch(clearState());
+      // history.push('/');
+    }
+    if (isError) {
+      toast.error(errorMessage);
+      // dispatch(clearState());
+    }
+  }, [isSuccess, isError]);
+
   return (
     <div className="signup flex jcc aic">
       <div className="signup-container">
@@ -84,7 +121,7 @@ const Signup = () => {
                 <div className="flex flex-col jcc aic">
                   {" "}
                   <button
-                    onClick={handleSubmit}
+                    onClick={() => handleSubmit}
                     type="submit"
                     className="btn btn-lg btn-green mt1-rem"
                   >
