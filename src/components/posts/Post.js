@@ -6,6 +6,7 @@ import { FcLike } from "react-icons/fc";
 import { updateLikes } from "../../features/posts/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 const Post = ({ username, data }) => {
+  console.log(data)
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user)
   return (
@@ -21,7 +22,7 @@ const Post = ({ username, data }) => {
           <div className="">
             {" "}
             <h1 className="h4 bold">{data.userId.name}</h1>
-            <h1 className="h5 bold">{username}</h1>
+            <h1 className="h5 f-grey">@{data.userId.username}</h1>
           </div>
         </div>
         <div className="post-content">{data.post}</div>
@@ -40,10 +41,6 @@ const Post = ({ username, data }) => {
             <FaRegComment size={20} />
             Comment
           </button>
-          {/* <button className="btn flex gap-1 jcc aic">
-            <FaRegShareSquare size={20} />
-            Share
-          </button> */}
         </div>
       </div>
     </div>
