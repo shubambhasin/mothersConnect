@@ -4,7 +4,6 @@ import motherbabybanner from "../../../assets/motherbabybanner.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signinUser } from "../../../features/user/userSlice";
-import toast, { Toaster } from "react-hot-toast";
 const Signin = () => {
   const [user, setUser] = useState({
     email: "",
@@ -13,23 +12,13 @@ const Signin = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token } = useSelector((state) => state.user);
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(
-    (state) => {
-      // console.log(state);
-      return state.user;
-    }
-  );
+  const {token } = useSelector((state) => state.user);
+ 
   useEffect(() => {
     if (token) {
       navigate("/");
     }
-  }, []);
-  useEffect(() => {
-    if (isSuccess) {
-      navigate("/");
-    }
-  }, []);
+  }, [token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

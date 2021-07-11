@@ -9,7 +9,7 @@ import { signupUser } from "../../../features/user/userSlice";
 const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(
+  const { isSuccess, isError, errorMessage } = useSelector(
     (state) => {
       console.log(state.user);
       return state.user;
@@ -41,11 +41,6 @@ const Signup = () => {
     console.log(user);
     dispatch(signupUser(user));
   };
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(clearState());
-  //   };
-  // }, []);
 
   useEffect(() => {
     if (isSuccess) {

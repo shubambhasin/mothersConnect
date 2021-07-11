@@ -1,69 +1,31 @@
 import React, { useEffect } from "react";
 import "./Home.css";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 import HomePost from "../../homePosts/HomePost";
 import { FcGallery, FcShare } from "react-icons/fc";
-import {
-  Image,
-  Video,
-  Transformation,
-  CloudinaryContext,
-} from "cloudinary-react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../features/user/userSlice";
-import { getPostsForHome } from "../../../features/home/homeSlice";
+import CustomSkeleton from "../../../services/Skeleton";
+import {
+  getPostsForHome,
+  getUsersToFollow,
+} from "../../../features/home/homeSlice";
 import PeopleCard from "../../peopleCard/PeopleCard";
 
-export const Navbar = styled.div`
-  height: 3rem;
-  background-color: white;
-  margin-bottom: 1rem;
-`;
 const Home = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => {
     return state.user;
   });
 
+  const home = useSelector((state) => state.home);
   useEffect(() => {
     dispatch(getPostsForHome());
+    dispatch(getUsersToFollow());
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { token } = useSelector((state) => {
-    return state.user;
-  });
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
-  const postsForHome = useSelector((state) => state.home);
-
   return (
-    <div className="home">
-      <Navbar className="flex aic jcsa global-shadow">
-        <span>Mother connect</span>
-        <div className="flex gap-2">
-          <NavLink to="/profile" className="btn">
-            Profile
-          </NavLink>
-          <span className="flex jcc aic">
-            {!token && (
-              <>
-                {" "}
-                <NavLink to="/signup">Signup</NavLink>
-                <NavLink to="/signin">Signin</NavLink>
-              </>
-            )}
-            {token && (
-              <button className="btn" onClick={handleLogout}>
-                Logout
-              </button>
-            )}
-          </span>
-        </div>
-      </Navbar>
+    <div className="home container">
       <div className="main-menu global-shadow">
         <div className="user-info flex aic gap-1">
           <img
@@ -103,25 +65,64 @@ const Home = () => {
           <div className="follow-more-container p1-rem">
             <span className="flex flex-col bg-white br10px p1-rem global-shadow friends-to-follow bold t-grey-7 ">
               <span className="mtb1-rem">People you can follow</span>
-              <PeopleCard name="Shubam bhasin" />
+              <span></span>
+              {home.status === "loading" && (
+                <>
+                  <CustomSkeleton
+                    type="bar"
+                    color="#eeeeee"
+                    highlightColor="fff"
+                    count={home.user?.length ? home.user.length : 3}
+                  />
+                </>
+              )}
+              {home.status === "success" &&
+                home.users
+                  .filter((data) => data._id !== user._id)
+                  // .filter((data) => !data.followers.includes(user._id))
+                  .map((user) => {
+                    return <PeopleCard key={user._id} data={user} />;
+                  })}
             </span>
           </div>
         </div>
         <div className="post-display">
           <div className="post-display-container">
-            {/* <Post username={user.username} postText="Test post " />
-            <Post username={user.username} postText="Test post " />
-            <Post username={user.username} postText="Test post " /> */}
-            {postsForHome.posts.map((post) => {
-              return (
-                <HomePost
-                  key={post._id}
-                  username={post.userId.username}
-                  data={post}
-                  author={post.userId.name}
+            {home.status === "loading" && (
+              <>
+                <CustomSkeleton
+                  type="card"
+                  color="#fff"
+                  highlightColor="#eeeeee"
+                  count="3"
                 />
-              );
-            })}
+                <p className="m1-rem"></p>
+                <CustomSkeleton
+                  type="card"
+                  color="#fff"
+                  highlightColor="#eeeeee"
+                  count="3"
+                />
+                <p className="m1-rem bg-white"></p>
+                <CustomSkeleton
+                  type="card"
+                  color="#fff"
+                  highlightColor="#eeeeee"
+                  count="3"
+                />
+              </>
+            )}
+            {home.status === "success" &&
+              home.posts.map((post) => {
+                return (
+                  <HomePost
+                    key={post._id}
+                    username={post.username}
+                    data={post}
+                    author={post.name}
+                  />
+                );
+              })}
           </div>
         </div>
       </div>

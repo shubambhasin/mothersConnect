@@ -80,3 +80,10 @@ h1 {
 .bg-white{
   background-color: var(--bg-white);
 }
+
+.container{
+  margin-top: 4rem;
+}
+.f-grey{
+  color: rgb(100, 100, 100);
+}

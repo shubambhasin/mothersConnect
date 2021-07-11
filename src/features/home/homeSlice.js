@@ -6,26 +6,53 @@ export const getPostsForHome = createAsyncThunk(
   async () => {
     try {
       const response = await instance.get("/home");
-      console.log("get posts fro home",response)
-      
       return response.data.posts;
     } catch (error) {
       console.log("error", error);
     }
   }
 );
-
-export const handleLikes = createAsyncThunk(
-    "home/handleLikes",
-    async(postId, userId) => {
-        
+export const getUsersToFollow = createAsyncThunk(
+  "home/getUsersToFollow",
+  async () => {
+    try {
+      const response = await instance.get("/users");
+      if(response.data.success)
+      {
+        return response.data.users;
+      }
+    } catch (error) {
+      console.log("error", error);
     }
-)
+  }
+);
+
+export const updateFollow = createAsyncThunk(
+  "posts/updateFollow",
+  async (user) => {
+    try {
+
+      const response = await instance.post('/users/follow', user);
+      console.log(response);
+      if(response.data.success)
+      {
+        return response.data.updatedUsers;
+      }
+      else{
+        return response.data.updatedUsers;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 
 export const homeSlice = createSlice({
   name: "home",
   initialState: {
     posts: [],
+    users: [],
     status: null,
   },
   reducers: {
@@ -41,6 +68,26 @@ export const homeSlice = createSlice({
     },
     [getPostsForHome.rejected]: (state, action) => {
       state.status = "failed";
+    },
+    [getUsersToFollow.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getUsersToFollow.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.users = action.payload;
+    },
+    [getUsersToFollow.rejected]: (state, action) => {
+      state.users = state.users.map((user) => user);
+    },
+    [updateFollow.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [updateFollow.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.users = action.payload;
+    },
+    [updateFollow.rejected]: (state, action) => {
+      state.users = state.users.map((user) => user);
     },
   },
 });

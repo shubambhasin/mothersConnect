@@ -2,13 +2,14 @@ import React from "react";
 import "./homePost.css";
 import { BsHeart } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
-import { getParticularUser } from "../../features/whoToFollow/allUserSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateLikes } from "../../features/posts/postSlice";
 import { FcLike } from "react-icons/fc";
 
 const HomePost = ({ data }) => {
+
+
+  const user = useSelector((state) => state.user)
   const dispatch = useDispatch();
   return (
     <div className="post ">
@@ -20,14 +21,18 @@ const HomePost = ({ data }) => {
             alt="profile-avatar"
             className="responsive global-avatar"
           />
-          <h1 className="h5 bold">
-            <NavLink
-              onClick={useDispatch(getParticularUser(data.userId._id))}
-              to={`/profile/${data.userId.username}`}
+        <span >  <h1 className="h4 bold">
+            {/* <NavLink
+              onClick={useDispatch(getParticularUser(data._id))}
+              to={`/users/${data.username}`}
             >
-              {data.userId.username}
-            </NavLink>
+              {data.username}
+            </NavLink> */}
+            {/* {data.userId.name} */}
+            {data.userId.name.charAt(0).toUpperCase() + data.userId.name.slice(1)}
+
           </h1>
+          <h5 className="h5 f-grey">@{data.userId.username}</h5></span>
         </div>
         <div className="post-content">
           {data.post}
@@ -43,7 +48,7 @@ const HomePost = ({ data }) => {
               className="btn flex gap-1 jcc aic"
               onClick={() => dispatch(updateLikes(data))}
             >
-              {data.likes.includes(data.userId._id) ? (
+              {data.likes.includes(user._id) ? (
                 <FcLike size={28} />
               ) : (
                 <BsHeart size={20} />

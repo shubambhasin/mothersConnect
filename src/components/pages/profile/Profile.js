@@ -4,37 +4,29 @@ import CreatePost from "../../createPost/CreatePost";
 import { FcGallery, FcShare } from "react-icons/fc";
 import Post from "../../posts/Post";
 import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../../../features/posts/postSlice";
-import { useParams } from "react-router";
-import { notify } from "../../../services/notification";
-// import { getParticularUser } from "../../../features/whoToFollow/allUserSlice";
+import { getFollowing } from "../../../features/posts/postSlice";
 
+import CustomSkeleton from "../../../services/Skeleton";
 const Profile = () => {
   const [showCreatePost, setShowCreatePost] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getPosts());
-    notify("Hello")
-
+    (async () => {
+      // dispatch(getPosts());
+      dispatch(getFollowing());
+    })();
   }, []);
-  const { id } = useParams();
-  console.log(id);
-  // useDispatch(getParticularUser(id))
-
-  const particularUser = useSelector((state) => state.allUser);
-  console.log(particularUser);
 
   const user = useSelector((state) => state.user);
-  const currentUserPosts = useSelector((state) => state.posts);
-  currentUserPosts.status === "loading" &&
-    console.log("Posts are getting loaded");
-  currentUserPosts.status === "success" && console.log(currentUserPosts.posts);
+
+  const currentUser = useSelector((state) => state.posts);
+  currentUser.status === "loading" && console.log("Posts are getting loaded");
 
   const toggleCreatePost = () => {
     setShowCreatePost((showCreatePost) => !showCreatePost);
   };
   return (
-    <div className="profile">
+    <div className="profile container">
       {showCreatePost && <CreatePost />}
       <div className="profile-container flex flex-col jcc aic">
         {" "}
@@ -54,14 +46,44 @@ const Profile = () => {
           />
         </div>
         <div className="user-info-container flex jcc aic flex-col">
-          <h1 className="h1 user-name">{user.username}</h1>
+          <h1 className="h1 user-name">{user.username.charAt(0).toUpperCase() + user.username.slice(1)}</h1>
           <span className="bio flex flex-col aic jcc">
             The world is not a fair place to live
-            <div className="t-center">Edit</div>
+            {/* <div className="t-center">Edit</div> */}
           </span>
+          <div className="flex gap-2">
+            {" "}
+            <span className="h4 bold">
+              Followers:{" "}
+              {currentUser.status === "success" &&
+                currentUser.userInfo.users[0].followers.length}
+            </span>
+            <span className="h4 bold">
+              Following:{" "}
+              {currentUser.status === "success" &&
+                currentUser.userInfo.users[0].following.length}
+            </span>
+          </div>{" "}
         </div>
         <div className="main-container">
-          <div className="friends-info">Friends and all other information</div>
+          <div className="friends-info">
+            Friends and all other information
+            <div className="flex flex-col gap-1">
+              {/* TODO: make it a link here */}
+              {currentUser.status === "loading" && (
+                <p className="t-center m1b1-rem">"Loading..."</p>
+              )}
+              {currentUser.status === "success" &&
+                currentUser.userInfo.users[0].following.map((friend) => {
+                  return (
+                    <div className="bold" key={friend._id}>
+
+                      {friend.name.charAt(0).toUpperCase() + friend.name.slice(1)}
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
           <div className="posts-display ">
             <div
               name="for toggling the modal"
@@ -81,12 +103,26 @@ const Profile = () => {
               </div>
             </div>
             <div>
-              {currentUserPosts.status === "loading" && (
-                <p className="t-center m1b1-rem">"Loading..."</p>
+              {currentUser.status === "loading" && (
+                <>
+                  <CustomSkeleton
+                    type="card"
+                    color="#fff"
+                    highlightColor="#eeeeee"
+                    count="3"
+                  />
+                  <p className="m1-rem"></p>
+                  <CustomSkeleton
+                    type="card"
+                    color="#fff"
+                    highlightColor="#eeeeee"
+                    count="3"
+                  />
+                </>
               )}
-              {currentUserPosts.status === "success" &&
-              currentUserPosts.posts.length !== 0
-                ? currentUserPosts.posts.map((post) => {
+              {currentUser.status === "success" &&
+              currentUser.userInfo.posts.length !== 0
+                ? currentUser.userInfo.posts.map((post) => {
                     return (
                       <Post
                         key={post._id}
