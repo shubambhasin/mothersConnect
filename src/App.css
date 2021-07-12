@@ -15,7 +15,6 @@
   --t-grey-6: rgb(87, 87, 87);
   --t-grey-7: rgb(49, 49, 49);
 
-
   /* *********z-index************ */
   --lvl-1: 100;
   --lvl-2: 200;
@@ -69,7 +68,7 @@ h1 {
 .mt05-rem {
   margin-top: 0.5rem;
 }
-.global-shadow{
+.global-shadow {
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 }
 /* *************misc*************** */
@@ -77,13 +76,30 @@ h1 {
 .w-100 {
   width: 100%;
 }
-.bg-white{
+.bg-white {
   background-color: var(--bg-white);
 }
 
-.container{
+.container {
   margin-top: 4rem;
 }
-.f-grey{
+.f-grey {
   color: rgb(100, 100, 100);
+}
+
+.hr-grey {
+  height: 1px;
+  background-color: #ccc;
+  border: none;
+  margin:  auto;
+  width: 100%;
+}
+.pl1-rem{
+  padding-left: 1rem;
+}
+
+.hpx{
+
+  width: 100%;
+
 }

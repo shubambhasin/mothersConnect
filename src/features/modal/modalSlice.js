@@ -6,10 +6,10 @@ export const modalSlice = createSlice({
     showModal: false,
   },
   reducers: {
-    showModal: (state) => {
+    toggleModal: (state) => {
       return {
         ...state,
-        showModal: true,
+        showModal: !state.showModal,
       };
     },
     hideModal: (state) => {
@@ -21,5 +21,5 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { hideModal, showModal } = modalSlice.reducer;
+export const { hideModal,toggleModal } = modalSlice.actions
 export default modalSlice.reducer;

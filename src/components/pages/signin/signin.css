@@ -3,6 +3,7 @@
     background: #f0f2f5;
   }
   .signin-container {
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,6 +54,7 @@
   
   @media screen and (max-width: 599px) {
     .signin-container {
+      margin-top: 3rem;
       gap: 2rem;
       flex-direction: column;
       justify-content: none;
@@ -62,19 +64,20 @@
       width: 90%;
     }
     .form-container {
-      width: 80%;
+      width: 100%;
     }
     .signin-form {
       order: 1;
     }
     .signin-banner {
+
       order: 2;
     }
     .signin .signin-container .signin-banner {
-      width: 80%;
+      width: 60%;
     }
     .signin-form {
-      width: 80%;
+      width: 95%;
     }
   }
   

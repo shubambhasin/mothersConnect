@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 import { instance } from "../../api/Axios";
 import { notify } from "../../services/notification";
+import { hideModal, toggleModal } from "../modal/modalSlice";
 
 export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   try {
@@ -16,10 +18,16 @@ export const getPosts = createAsyncThunk("posts/getPosts", async () => {
 });
 
 export const sendPost = createAsyncThunk("posts/sendPost", async (post) => {
+
   try {
     console.log(post);
     const response = await instance.post("/posts", post);
     console.log(response);
+    if(response.data.success)
+    {
+      notify("Post added successfully ✅")
+
+    }
   } catch (error) {notify("Error occured ❌❌")
     console.log(error);
   }

@@ -56,10 +56,10 @@ const HomePost = ({ data }) => {
               Like
             </button>
           </div>
-          <button className="btn flex gap-1 jcc aic">
+          {/* <button className="btn flex gap-1 jcc aic">
             <FaRegComment size={20} />
             Comment
-          </button>
+          </button> */}
           {/* <button className="btn flex gap-1 jcc aic">
             <FaRegShareSquare size={20} />
             Share

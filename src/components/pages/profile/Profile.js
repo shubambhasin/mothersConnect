@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./profile.css";
 import CreatePost from "../../createPost/CreatePost";
 import { FcGallery, FcShare } from "react-icons/fc";
 import Post from "../../posts/Post";
 import { useDispatch, useSelector } from "react-redux";
 import { getFollowing } from "../../../features/posts/postSlice";
-
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import CustomSkeleton from "../../../services/Skeleton";
+import { toggleModal } from "../../../features/modal/modalSlice";
+import { NavLink } from "react-router-dom";
 const Profile = () => {
-  const [showCreatePost, setShowCreatePost] = useState(false);
+  // const [showCreatePost, setShowCreatePost] = useState(false);
+  const modal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
-      // dispatch(getPosts());
       dispatch(getFollowing());
     })();
   }, []);
 
   const user = useSelector((state) => state.user);
-
   const currentUser = useSelector((state) => state.posts);
-  currentUser.status === "loading" && console.log("Posts are getting loaded");
 
   const toggleCreatePost = () => {
-    setShowCreatePost((showCreatePost) => !showCreatePost);
+    dispatch(toggleModal());
   };
   return (
     <div className="profile container">
-      {showCreatePost && <CreatePost />}
+      {modal.showModal && <CreatePost />}
       <div className="profile-container flex flex-col jcc aic">
         {" "}
         <div className="cover">
@@ -46,39 +46,68 @@ const Profile = () => {
           />
         </div>
         <div className="user-info-container flex jcc aic flex-col">
-          <h1 className="h1 user-name">{user.username.charAt(0).toUpperCase() + user.username.slice(1)}</h1>
+          <h1 className="h1 user-name">
+            {user.username.charAt(0).toUpperCase() + user.username.slice(1)}
+          </h1>
           <span className="bio flex flex-col aic jcc">
             The world is not a fair place to live
             {/* <div className="t-center">Edit</div> */}
           </span>
-          <div className="flex gap-2">
-            {" "}
-            <span className="h4 bold">
-              Followers:{" "}
-              {currentUser.status === "success" &&
-                currentUser.userInfo.users[0].followers.length}
-            </span>
-            <span className="h4 bold">
-              Following:{" "}
-              {currentUser.status === "success" &&
-                currentUser.userInfo.users[0].following.length}
-            </span>
+          <div className="flex gap-2 jcc aic mt1-rem w-100">
+            {currentUser.status === "loading" && (
+              <span className="hpx">
+                <CustomSkeleton
+                  type="bar"
+                  color="#dddddd"
+                  highlightColor="#eeeeee"
+                  count="3"
+                />
+              </span>
+            )}
+            {currentUser.status === "success" && (
+              <>
+                {" "}
+                <NavLink
+                  to="/followers"
+                  className="links h4 bold btn btn-outline"
+                >
+                  Followers:{" "}
+                  {currentUser.status === "success" &&
+                    currentUser.userInfo.users[0].followers.length}
+                </NavLink>
+                <NavLink
+                  to="/following"
+                  className="links h4 bold btn btn-outline"
+                >
+                  Following:{" "}
+                  {currentUser.status === "success" &&
+                    currentUser.userInfo.users[0].following.length}
+                </NavLink>
+              </>
+            )}
           </div>{" "}
         </div>
         <div className="main-container">
           <div className="friends-info">
             Friends and all other information
-            <div className="flex flex-col gap-1">
+            <div className="flex gap-1 aic">
               {/* TODO: make it a link here */}
               {currentUser.status === "loading" && (
-                <p className="t-center m1b1-rem">"Loading..."</p>
+                  <span className="hpx">
+                  <CustomSkeleton
+                    type="bar"
+                    color="#fff"
+                    highlightColor="#eeeeee"
+                    count="3"
+                  />
+                </span>
               )}
               {currentUser.status === "success" &&
                 currentUser.userInfo.users[0].following.map((friend) => {
                   return (
                     <div className="bold" key={friend._id}>
-
-                      {friend.name.charAt(0).toUpperCase() + friend.name.slice(1)}
+                      {friend.name.charAt(0).toUpperCase() +
+                        friend.name.slice(1)}
                     </div>
                   );
                 })}
@@ -91,15 +120,13 @@ const Profile = () => {
               onClick={toggleCreatePost}
               className="fakebtn create-post flex flex-col global-shadow"
             >
-              <p className="small t-grey-6">Whats in your mind</p>
+              <p className="small t-grey-6">Whats on your mind ?</p>
               <div className="jsfe flex gap-2 jcc aic ">
                 <span className="flex jcc aic gap-1">
                   <FcGallery size={20} />
                   <span>Photo</span>
                 </span>
-                <span className="flex jcc aic gap-1">
-                  <FcShare size={20} /> <span>Life Event</span>
-                </span>
+              
               </div>
             </div>
             <div>
@@ -122,15 +149,18 @@ const Profile = () => {
               )}
               {currentUser.status === "success" &&
               currentUser.userInfo.posts.length !== 0
-                ? currentUser.userInfo.posts.map((post) => {
-                    return (
-                      <Post
-                        key={post._id}
-                        username={post.userId.username}
-                        data={post}
-                      />
-                    );
-                  })
+                ? currentUser.userInfo.posts
+                    .slice(0)
+                    .reverse()
+                    .map((post) => {
+                      return (
+                        <Post
+                          key={post._id}
+                          username={post.userId.username}
+                          data={post}
+                        />
+                      );
+                    })
                 : "No posts to show"}
             </div>
           </div>

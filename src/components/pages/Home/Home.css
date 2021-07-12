@@ -40,7 +40,7 @@
 }
 .follow-more-container {
   background-color: var(--bg-light-color);
-  height: 100vh;
+  min-height: auto;
   border-radius: 10px;
   display: flex;
   width: 100%;
@@ -98,3 +98,15 @@
   }
 }
 
+@media screen and (max-width: 450px) {
+  .main-menu {
+    flex-direction: column;
+    width: 100%;
+    gap: 0rem;
+  }
+  .home-container {
+    width: 100%;
+    margin: 0;
+  }
+  
+}

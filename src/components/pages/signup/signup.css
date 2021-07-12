@@ -2,7 +2,9 @@
   max-width: 1440px;
   background: #f0f2f5;
 }
+
 .signup-container {
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,6 +54,7 @@
 
 @media screen and (max-width: 599px) {
   .signup-container {
+    margin-top: 5rem;
     gap: 2rem;
     flex-direction: column;
     justify-content: none;
@@ -70,9 +73,9 @@
     order: 2;
   }
   .signup .signup-container .signup-banner {
-    width: 80%;
+    width: 60%;
   }
   .signup-form {
-    width: 80%;
+    width: 95%;
   }
 }

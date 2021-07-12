@@ -4,11 +4,13 @@ import HomePost from "../../homePosts/HomePost";
 import { FcGallery, FcShare } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import CustomSkeleton from "../../../services/Skeleton";
+import CreatePost from "../../createPost/CreatePost";
 import {
   getPostsForHome,
   getUsersToFollow,
 } from "../../../features/home/homeSlice";
 import PeopleCard from "../../peopleCard/PeopleCard";
+import { toggleModal } from "../../../features/modal/modalSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,16 +18,18 @@ const Home = () => {
     return state.user;
   });
 
+  const modal = useSelector((state) => state.modal);
   const home = useSelector((state) => state.home);
   useEffect(() => {
     dispatch(getPostsForHome());
     dispatch(getUsersToFollow());
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="home container">
+      {modal.showModal && <CreatePost />}
       <div className="main-menu global-shadow">
         <div className="user-info flex aic gap-1">
           <img
@@ -40,21 +44,18 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="create-post">
+        <div className="create-post" onClick={() => dispatch(toggleModal())}>
           <div
             name="for toggling the modal"
             title="Click to make a post"
             // onClick={toggleCreatePost}
             className="fakebtn create-post-home flex flex-col global-shadow"
           >
-            <p className="small t-grey-6">Whats in your mind</p>
+            <p className="small t-grey-6">Whats on your mind ?</p>
             <div className="jsfe flex gap-2 jcc aic ">
               <span className="flex jcc aic gap-1">
                 <FcGallery size={20} />
                 <span>Photo</span>
-              </span>
-              <span className="flex jcc aic gap-1">
-                <FcShare size={20} /> <span>Life Event</span>
               </span>
             </div>
           </div>
@@ -113,16 +114,19 @@ const Home = () => {
               </>
             )}
             {home.status === "success" &&
-              home.posts.map((post) => {
-                return (
-                  <HomePost
-                    key={post._id}
-                    username={post.username}
-                    data={post}
-                    author={post.name}
-                  />
-                );
-              })}
+              home.posts
+                .slice(0)
+                .reverse()
+                .map((post) => {
+                  return (
+                    <HomePost
+                      key={post._id}
+                      username={post.username}
+                      data={post}
+                      author={post.name}
+                    />
+                  );
+                })}
           </div>
         </div>
       </div>

@@ -1,0 +1,14 @@
+.follow{
+    width: 40%;
+    background-color: white;
+    min-height: 100vh;
+    border-radius: 10px;
+    min-width: 400px;
+}
+
+@media screen and (max-width: 400px)
+{
+    .follow{
+        min-width: 100%;
+    }
+}

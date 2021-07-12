@@ -1,11 +1,11 @@
 import React from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-const CustomSkeleton = ({ type, color, highlight, count }) => {
+const CustomSkeleton = ({ type, color, highlight, count, padding }) => {
   return (
     <div>
       {type === "bar" && (
         <SkeletonTheme color={color} highlightColor={highlight}>
-          <p>
+          <p className={`${padding}`}>
             <Skeleton count={count} />
           </p>
         </SkeletonTheme>
