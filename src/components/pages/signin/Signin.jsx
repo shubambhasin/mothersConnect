@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { signinUser } from "../../../features/user/userSlice";
 const Signin = () => {
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: "test39@test39.com",
+    password: "shubam",
   });
 
   const dispatch = useDispatch();
@@ -76,6 +76,12 @@ const Signin = () => {
                     className="btn btn-lg btn-green mt1-rem"
                   >
                     Login
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-lg btn-green mt1-rem"
+                  >
+                    Login with test credentials
                   </button>
                   <small className="mt05-rem">
                     Don't have an account?{" "}
