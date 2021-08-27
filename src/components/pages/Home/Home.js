@@ -11,7 +11,7 @@ import {
 } from "../../../features/home/homeSlice";
 import PeopleCard from "../../peopleCard/PeopleCard";
 import { toggleModal } from "../../../features/modal/modalSlice";
-
+import avatar from '../../../assets/avatar.jpg'
 const Home = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => {
@@ -34,7 +34,7 @@ const Home = () => {
         <div className="user-info flex aic gap-1">
           <img
             className=""
-            src="https://react.semantic-ui.com/images/avatar/large/helen.jpg"
+            src={avatar}
             alt="avatar"
           />
           <div>

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendPost } from "../../features/posts/postSlice";
 import { hideModal, toggleModal } from "../../features/modal/modalSlice";
 import { notify } from "../../services/notification";
+import avatar from '../../assets/avatar.jpg'
 const CreatePost = () => {
   const [post, setPost] = useState({
     post: "",
@@ -43,7 +44,7 @@ const CreatePost = () => {
           <div className="flex gap-1 w-100">
             <span>
               <img
-                src="https://react.semantic-ui.com/images/avatar/large/helen.jpg"
+                src={avatar}
                 alt="profile-avatar"
                 className="responsive global-avatar"
               />

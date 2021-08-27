@@ -5,7 +5,7 @@ import { FaRegComment } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLikes } from "../../features/posts/postSlice";
 import { FcLike } from "react-icons/fc";
-
+import avatar from '../../assets/avatar.jpg'
 const HomePost = ({ data }) => {
 
 
@@ -17,7 +17,7 @@ const HomePost = ({ data }) => {
         <div className="flex gap-1">
           {" "}
           <img
-            src="https://react.semantic-ui.com/images/avatar/large/helen.jpg"
+            src={avatar}
             alt="profile-avatar"
             className="responsive global-avatar"
           />

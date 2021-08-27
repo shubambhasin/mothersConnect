@@ -9,6 +9,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import CustomSkeleton from "../../../services/Skeleton";
 import { toggleModal } from "../../../features/modal/modalSlice";
 import { NavLink } from "react-router-dom";
+import avatar from '../../../assets/avatar.jpg'
 const Profile = () => {
   // const [showCreatePost, setShowCreatePost] = useState(false);
   const modal = useSelector((state) => state.modal);
@@ -17,7 +18,7 @@ const Profile = () => {
     (async () => {
       dispatch(getFollowing());
     })();
-  }, []);
+  }, [dispatch]);
 
   const user = useSelector((state) => state.user);
   const currentUser = useSelector((state) => state.posts);
@@ -41,7 +42,7 @@ const Profile = () => {
         <div className="profile-photo-container">
           <img
             className="responsive avtr-circle profile-photo"
-            src="https://react.semantic-ui.com/images/avatar/large/helen.jpg"
+            src={avatar}
             alt="profile-avatar"
           />
         </div>
