@@ -1,0 +1,77 @@
+.profile {
+  width: 70%;
+  margin: 0 auto;
+  background-color: white;
+  min-height: 100vh;
+}
+.profile-container {
+  position: relative;
+  z-index: var(--lvl-9);
+}
+.profile-container .cover {
+  width: 100%;
+  height: 100%;
+}
+.profile-photo-container {
+  margin-top: -5rem;
+}
+.profile-photo {
+  height: 168px;
+  width: 168px;
+}
+.profile-container .main-container {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.profile-container .main-container .friends-info {
+  width: 40%;
+  background-color: var(--bg-light-color);
+  height: 50vh;
+  margin: 1rem;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.profile-container .main-container .posts-display {
+  width: 60%;
+  height: max-content;
+  background-color: var(--bg-light-color);
+  margin: 1rem;
+  border-radius: 10px;
+  /* padding-bottom: 1rem; */
+}
+.posts-display .create-post {
+  background-color: white;
+  margin: 1rem;
+  border-radius: 10px;
+  min-height: 5rem;
+  padding: 0.5rem;
+}
+
+/* **********misc******** */
+.jsfe {
+  margin-top: auto;
+}
+
+/* ******************Media queries************** */
+@media screen and (max-width: 768px) {
+  .profile {
+    width: 95%;
+  }
+  .profile-container .main-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .profile-container .main-container .friends-info {
+    width: 90%;
+    margin: 1rem;
+  }
+
+  .profile-container .main-container .posts-display {
+    margin: 1rem;
+    width: 90%;
+  }
+}

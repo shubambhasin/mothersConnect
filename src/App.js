@@ -1,10 +1,25 @@
 import React from "react";
 import "./App.css";
+import { useSelector } from "react-redux";
+import MyRoutes from "./services/MyRoutes";
+import { instance } from "./api/Axios";
+import Interceptor from "./services/Interceptor";
+import { Toaster } from "react-hot-toast";
+import MyNavbar from "./components/Navbar/Navbar";
 
 function App() {
-  return(
+  
+  const { token } = useSelector((state) => {
+    return state.user;
+  });
+  instance.defaults.headers.common['Authorization'] = token || "";
+  return (
     <div className="App">
-      Mothers-Connect
+      <Interceptor/>
+      <MyNavbar/>
+      <Toaster />
+      {/* <Signup/> */}
+      <MyRoutes />
     </div>
   );
 }
